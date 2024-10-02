@@ -15,8 +15,8 @@ namespace Talabat.Core.Interfaces
 		public Task<int> CreateAsync(T t);
 		public Task<int> UpdateAsync(T t);
 		public Task<int> DeleteAsync(T t);
-		public Task<IEnumerable<T>> GetAllAsync(ISpecification<T> specification);
-        public Task<T> GetByIdAsync(ISpecification<T> specification);
+		public Task<IEnumerable<T>> GetAllWithSpecAsync(ISpecification<T> specification);
+        public Task<T> GetByIdWithSpecAsync(ISpecification<T> specification);
 
 
     }

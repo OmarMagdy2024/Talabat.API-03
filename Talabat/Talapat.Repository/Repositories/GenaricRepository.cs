@@ -49,17 +49,16 @@ namespace Talabat.Repository.Repositories
 			}
 			return await _talabatDBContext.Set<T>().FindAsync(id);
 		}
-
 		public async Task<int> UpdateAsync(T t)
 		{
 			_talabatDBContext.Set<T>().Update(t);
 			return await _talabatDBContext.SaveChangesAsync();
 		}
-        public async Task<T> GetByIdAsync(ISpecification<T> specification)
+        public async Task<T> GetByIdWithSpecAsync(ISpecification<T> specification)
         {
             return await values(specification).FirstOrDefaultAsync();
         }
-        public async Task<IEnumerable<T>> GetAllAsync(ISpecification<T> specification)
+        public async Task<IEnumerable<T>> GetAllWithSpecAsync(ISpecification<T> specification)
         {
             return await values(specification).ToListAsync();
         }

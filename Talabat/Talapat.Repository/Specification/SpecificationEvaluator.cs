@@ -19,7 +19,7 @@ namespace Talabat.Repository.Specification
             {
                 query = Sequence.Where(specification.Critria);
             }
-            query = specification.Includes.Aggregate(query, (current, result) => current.Include(result));
+            query = specification.Includes.Aggregate(query, (Input, outbut) => Input.Include(outbut));
             return query;
         }
     }
