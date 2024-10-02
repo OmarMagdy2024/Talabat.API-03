@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Models;
+using Talabat.Core.Specification;
 
 namespace Talabat.Core.Interfaces
 {
@@ -14,5 +15,9 @@ namespace Talabat.Core.Interfaces
 		public Task<int> CreateAsync(T t);
 		public Task<int> UpdateAsync(T t);
 		public Task<int> DeleteAsync(T t);
-	}
+		public Task<IEnumerable<T>> GetAllAsync(ISpecification<T> specification);
+        public Task<T> GetByIdAsync(ISpecification<T> specification);
+
+
+    }
 }
