@@ -1,5 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
+using Talabat.API.Profiless;
+using Talabat.API.Profiless;
 using Talabat.Core.Interfaces;
 using Talabat.Core.Models;
 using Talabat.Repository.Connections;
@@ -25,6 +27,7 @@ public class Program
         //builder.Services.AddScoped<IGenaricRepository<ProductBrand>, GenaricRepository<ProductBrand>>();
         //builder.Services.AddScoped<IGenaricRepository<ProductType>, GenaricRepository<ProductType>>();
         builder.Services.AddScoped(typeof(IGenaricRepository<>), typeof(GenaricRepository<>));
+        builder.Services.AddAutoMapper(typeof(Profiles));
         var app = builder.Build();
 
         //{

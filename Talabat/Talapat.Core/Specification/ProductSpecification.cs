@@ -14,9 +14,9 @@ namespace Talabat.Core.Specification
             Includes.Add(p=>p.ProductBrand);
             Includes.Add(p=>p.ProductType);
         }
-        public ProductSpecification(int id)
+        public ProductSpecification(int id):base(p => p.Id == id)
         {
-            Critria =p=>p.Id==id;
+            //Critria =p=>p.Id==id;
             Includes.Add(p => p.ProductBrand);
             Includes.Add(p => p.ProductType);
         }

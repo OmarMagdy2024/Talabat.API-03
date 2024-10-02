@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Talabat.API.ModelDTO;
 using Talabat.Core.Interfaces;
 using Talabat.Core.Models;
 using Talabat.Core.Specification;
@@ -12,11 +14,13 @@ namespace Talabat.API.Controllers
 	public class ProductController : ControllerBase
 	{
 		private readonly IGenaricRepository<Product> _genaricRepository;
+        private readonly IMapper _mapper;
 
-		public ProductController(IGenaricRepository<Product> genaricRepository)
+        public ProductController(IGenaricRepository<Product> genaricRepository ,IMapper mapper)
         {
 			_genaricRepository = genaricRepository;
-		}
+            _mapper = mapper;
+        }
 
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<Product>>> GetAllProduct()
@@ -27,14 +31,29 @@ namespace Talabat.API.Controllers
 			{
 				return NotFound(new {message="Not Found",CodeStatus=404});
 			}
-			return Ok(product);
+			return Ok(_mapper.Map< IEnumerable<Product>, IEnumerable<ProductDTO>>(product));
 		}
 
 		[HttpGet("{id}")]
 		public async Task<ActionResult<Product>> GetProductById(int id)
         {
             var spec = new ProductSpecification(id);
-            return Ok(await _genaricRepository.GetByIdWithSpecAsync(spec));
+			var product = await _genaricRepository.GetByIdWithSpecAsync(spec);
+
+            if (product == null)
+            {
+                return NotFound(new { message = "Not Found", CodeStatus = 404 });
+            }
+            return Ok(new ProductDTO()
+			{
+				Id=product.Id,
+				Name=product.Name,
+				PictureUrl=product.PictureUrl,
+				Price=product.Price,
+				ProductBrand=product.ProductBrand.Name,
+				ProductType=product.ProductType.Name,
+				Description=product.Description,
+			});
 		}
     }
 }
