@@ -15,11 +15,13 @@ namespace Talabat.API.Controllers
 	{
 		private readonly IGenaricRepository<Product> _genaricRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public ProductController(IGenaricRepository<Product> genaricRepository ,IMapper mapper)
+        public ProductController(IGenaricRepository<Product> genaricRepository ,IMapper mapper,IConfiguration configuration)
         {
 			_genaricRepository = genaricRepository;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
 		[HttpGet]
@@ -48,7 +50,7 @@ namespace Talabat.API.Controllers
 			{
 				Id=product.Id,
 				Name=product.Name,
-				PictureUrl=product.PictureUrl,
+				PictureUrl = $"{_configuration["BaseURL"]}/{product.PictureUrl}",
 				Price=product.Price,
 				ProductBrand=product.ProductBrand.Name,
 				ProductType=product.ProductType.Name,
